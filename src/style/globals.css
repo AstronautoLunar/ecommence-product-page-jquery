@@ -32,6 +32,11 @@
     font-family: "Kumbh Sans", Arial, sans-serif;
 }
 
+#container {
+    width: 1000px;
+    height: inherit;
+}
+
 .attribution { 
     font-size: 11px; 
     text-align: center; 
