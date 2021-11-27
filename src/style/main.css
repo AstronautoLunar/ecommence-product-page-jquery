@@ -1,0 +1,12 @@
+.image-thumbnail-product {
+    width: 80px;
+    height: 80px;
+
+    object-fit: cover;
+
+    transition: opacity 500ms;
+}
+
+[data-selected="true"] {
+    opacity: 0.5;
+}
