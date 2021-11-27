@@ -1,5 +1,6 @@
 const areaPresentationProduct = $("#area-presentation-product");
 const areaThumbnails = $('<div id="area-thumbnails-produtcs"></div>');
+const imageCurrentProduct = $('<img id="current-image"/>');
 
 let currentImageProduct = "";
 let imagesProducts = [
@@ -10,7 +11,7 @@ let imagesProducts = [
             selected: true
         },
         normal: {
-            source: "./assets/images/image-product-1",
+            source: "./assets/images/image-product-1.jpg",
             alt: "image produto 1"
         }
     },
@@ -21,7 +22,7 @@ let imagesProducts = [
             selected: false
         },
         normal: {
-            source: "./assets/images/image-product-2",
+            source: "./assets/images/image-product-2.jpg",
             alt: "image produto 2"
         }
     },
@@ -32,7 +33,7 @@ let imagesProducts = [
             selected: false
         },
         normal: {
-            source: "./assets/images/image-product-3",
+            source: "./assets/images/image-product-3.jpg",
             alt: "image produto 3"
         }
     },
@@ -43,7 +44,7 @@ let imagesProducts = [
             selected: false
         },
         normal: {
-            source: "./assets/images/image-product-4",
+            source: "./assets/images/image-product-4.jpg",
             alt: "image produto 4"
         }
     },
@@ -73,6 +74,16 @@ imagesInHTML.forEach(item => (
     areaThumbnails.append(item)
 ));
 
+function loadImageCurrentProduct(id) {
+    currentImageProduct = imagesProducts[id].normal;
+
+    imageCurrentProduct.attr("src", currentImageProduct.source);
+    imageCurrentProduct.attr("alt", currentImageProduct.alt);
+
+    areaPresentationProduct.prepend(imageCurrentProduct);
+}
+
+
 const imagesRendered = $(".image-thumbnail-product");
 imagesRendered.click(({ target }) => {
     const { selected } = target.dataset;
@@ -92,4 +103,27 @@ imagesRendered.click(({ target }) => {
     arrayElementsBrothers.forEach(item => {
         item.dataset.selected = false;
     });
+
+    const arrayThumbnails = [ ...imagesRendered ];
+
+    arrayThumbnails.forEach(item => {
+        const { 
+            selected, 
+            id 
+        } = item.dataset;
+
+        if(selected === "true") {
+            loadImageCurrentProduct(id);
+        }
+
+    });
+});
+
+// Ao carregar a página
+imagesProducts.forEach((item, index) => {
+    const { selected } = item.thumbnail;
+
+    if(selected) {
+        loadImageCurrentProduct(index);
+    }
 })

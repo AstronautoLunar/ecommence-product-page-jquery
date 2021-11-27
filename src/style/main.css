@@ -10,3 +10,20 @@
 [data-selected="true"] {
     opacity: 0.5;
 }
+
+#current-image {
+    width: 200px;
+    height: 200px;
+
+    animation: show 500ms;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
