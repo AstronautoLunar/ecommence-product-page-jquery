@@ -1,5 +1,5 @@
 const areaPresentationProduct = $("#area-presentation-product");
-const areaThumbnails = $('<div id="area-thumbnails-produtcs"></div>');
+const areaThumbnails = $('<div id="area-thumbnails-products"></div>');
 const imageCurrentProduct = $('<img id="current-image"/>');
 
 let currentImageProduct = "";
@@ -48,7 +48,7 @@ let imagesProducts = [
             alt: "image produto 4"
         }
     },
-]
+];
 
 const imagesInHTML = imagesProducts.map((item, index) => {
     const { 
