@@ -64,6 +64,8 @@
     animation: show 800ms;
 
     margin-bottom: 20px;
+
+    cursor: all-scroll;
 }
 
 @keyframes show {
