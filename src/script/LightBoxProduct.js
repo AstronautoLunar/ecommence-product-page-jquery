@@ -1,7 +1,9 @@
 
 class LightBoxProduct {
     constructor({
-        data
+        data,
+        srcImageButtonLeft,
+        srcImageButtonRight
     } = {}) {
         function createImageArray(thumbnails) {
             const elementsThumbnailArray = thumbnails.map((item, index) => {
@@ -62,7 +64,18 @@ class LightBoxProduct {
         const area = $("<div></div>");
         const currentElementImage = $("<img/>");
         const areaThumbnails = $("<div/>");
-        
+        const buttonLeft = $(`<img
+            src="${ srcImageButtonLeft }"
+            alt="Image Button"
+        />`);
+        const buttonRight = $(`<img
+            src="${ srcImageButtonRight }"
+            alt="Image Button"
+        />`);
+
+        console.log(buttonLeft);
+        console.log(buttonRight);
+
         backgroundDark.css(stylesElements.backgroundDark);
         areaThumbnails.css(stylesElements.areaThumbnails);
         area.css(stylesElements.area);
@@ -77,7 +90,9 @@ class LightBoxProduct {
         this._area = area;
         this._currentElementImage = currentElementImage;
         this._areaThumbnails = areaThumbnails;
-        this._thumbnailsElements = createImageArray(thumbnails)
+        this._thumbnailsElements = createImageArray(thumbnails);
+        this._buttonLeft = buttonLeft;
+        this._buttonRight = buttonRight;
     }
 
     get backgroundDark() {
@@ -100,13 +115,22 @@ class LightBoxProduct {
         return this._thumbnailsElements;
     }
 
+    get buttonLeft() {
+        return this._buttonLeft;
+    }
+
+    get buttonRight() {
+        return this._buttonRight;
+    }
+
     show() {
         const {
             backgroundDark,
             area,
             currentElementImage,
             areaThumbnails,
-            thumbnailsElements
+            thumbnailsElements,
+
         } = this;
 
         function mountLightBox({
