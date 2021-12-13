@@ -215,10 +215,16 @@ class LightBoxProduct {
                     const { id } = currentTarget.dataset;
                     const idNumber = Number(id);
 
-                    image.src = dataImages[idNumber].source;
-                    indexNumber = idNumber;
+                    $(currentTarget).css("filter", "brightness(1.5)");
 
-                    console.log(idNumber);
+                    image.src = dataImages[idNumber].source;
+                    const elementsBrother = $(currentTarget).siblings();
+
+                    elementsBrother.each((index, element) => (
+                        $(element).css("filter", "brightness(1)")
+                    ));
+
+                    indexNumber = idNumber;
                 });
             });
 
