@@ -6,7 +6,14 @@ class LightBoxProduct {
         function createImageArray(thumbnails) {
             const elementsThumbnailArray = thumbnails.map((item, index) => {
                 const arrayElementCreated = $("<img/>");
-    
+
+                arrayElementCreated.css({
+                    "width": "15%",
+                    "margin-right": 8,
+                    "margin-left": 8,
+                    "border-radius": 10
+                })
+
                 arrayElementCreated.attr("src", item.source);
                 arrayElementCreated.attr("alt", item.alt);
                 arrayElementCreated.attr("data-id", index);
@@ -26,12 +33,15 @@ class LightBoxProduct {
                 "align-items": "center"
             },
             currentElementImage: {
-                "width": "300"
+                "width": 400,
+                "border-radius": 10
             },
             areaThumbnails: {
                 "display": "flex",
-                "justify-content": "space-around",
-                "align-items": "center"
+                "justify-content": "center",
+                "align-items": "center",
+                "width": 500,
+                "margin-top": 16
             },
             backgroundDark: {
                 "position": "absolute",

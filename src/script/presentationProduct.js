@@ -128,12 +128,6 @@ imagesProducts.forEach((item, index) => {
     }
 });
 
-// const imagesThumbnals = imagesProducts.map(item => (
-//     item.thumbnail
-// ));
-
-// console.log(imagesThumbnals);
-
 const lightbox = new LightBoxProduct({
     data: imagesProducts
 });
