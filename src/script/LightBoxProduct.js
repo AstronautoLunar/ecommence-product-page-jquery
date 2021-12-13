@@ -128,6 +128,9 @@ class LightBoxProduct {
             positionX: "100%",
             type: "right"
         });
+
+        this._indexNumber = 1;
+        this._data = data;
     }
 
     get backgroundDark() {
@@ -162,8 +165,16 @@ class LightBoxProduct {
         return this._buttonRight;
     }
 
+    get index() {
+        return this._indexNumber;
+    }
+
+    get data() {
+        return this._data;
+    }
+
     show() {
-        const {
+        let {
             backgroundDark,
             area,
             areaCurrentImage,
@@ -171,7 +182,9 @@ class LightBoxProduct {
             areaThumbnails,
             thumbnailsElements,
             buttonLeft,
-            buttonRight
+            buttonRight,
+            indexNumber,
+            data
         } = this;
 
         function mountLightBox({
@@ -190,6 +203,44 @@ class LightBoxProduct {
             area.append(areaThumbnails);
             thumbnailsElements.forEach(item => {
                 areaThumbnails.append(item);
+            });
+
+            const dataImages = data.map(item => item.normal);
+            const [ image ] = currentElementImage;
+
+            indexNumber = 0;
+
+            thumbnailsElements.forEach(item => {
+                $(item).on("click", ({ currentTarget }) => {    
+                    const { id } = currentTarget.dataset;
+                    const idNumber = Number(id);
+
+                    image.src = dataImages[idNumber].source;
+                    indexNumber = idNumber;
+
+                    console.log(idNumber);
+                });
+            });
+
+            buttonLeft.on("click", () => {
+                indexNumber--;
+                if(indexNumber < 0) {
+                    indexNumber = (dataImages.length - 1);
+                    image.src = dataImages[indexNumber].source;
+                } else {
+                    
+                    image.src = dataImages[indexNumber].source;
+                }
+            });
+
+            buttonRight.on("click", () => {
+                indexNumber++;
+                if(indexNumber >= dataImages.length) {
+                    indexNumber = 0;
+                    image.src = dataImages[indexNumber].source;
+                } else {
+                    image.src = dataImages[indexNumber].source;
+                }
             });
         }
 
