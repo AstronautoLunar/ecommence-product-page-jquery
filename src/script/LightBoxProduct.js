@@ -27,12 +27,39 @@ class LightBoxProduct {
             return elementsThumbnailArray;
         }
 
+        function createButton({ 
+            icon, 
+            positionX, 
+            type 
+        }) {
+            const area = $("<div></div>");
+            area.css({
+                "width": 50,
+                "height": 50,
+                "background-color": "#f7f8fd",
+                "display": "flex",
+                "justify-content": "center",
+                "align-items": "center",
+                "border-radius": "100%",
+                "position": "absolute",
+                "top": "50%",
+                "left": positionX,
+                "transform": "translate(-50%, -50%)"
+            });
+            area.attr("data-type", type);
+            area.append(icon);
+            return area;
+        }
+
         const stylesElements = {
             area: {
                 "display": "flex",
                 "flex-direction": "column",
                 "justify-content": "center",
                 "align-items": "center"
+            },
+            areaCurrentImage: {
+                "position": "relative"
             },
             currentElementImage: {
                 "width": 400,
@@ -62,23 +89,22 @@ class LightBoxProduct {
 
         const backgroundDark = $("<div></div>");
         const area = $("<div></div>");
+        const areaCurrentImage = $("<div></div>");
         const currentElementImage = $("<img/>");
         const areaThumbnails = $("<div/>");
-        const buttonLeft = $(`<img
+        const iconLeftButton = $(`<img
             src="${ srcImageButtonLeft }"
             alt="Image Button"
         />`);
-        const buttonRight = $(`<img
+        const iconRightButton = $(`<img
             src="${ srcImageButtonRight }"
             alt="Image Button"
         />`);
 
-        console.log(buttonLeft);
-        console.log(buttonRight);
-
         backgroundDark.css(stylesElements.backgroundDark);
         areaThumbnails.css(stylesElements.areaThumbnails);
         area.css(stylesElements.area);
+        areaCurrentImage.css(stylesElements.areaCurrentImage);
         currentElementImage.css(stylesElements.currentElementImage);
 
         const { normal } = data[0];
@@ -88,11 +114,20 @@ class LightBoxProduct {
 
         this._backgroundDark = backgroundDark;
         this._area = area;
+        this._areaCurrentImage = areaCurrentImage;
         this._currentElementImage = currentElementImage;
         this._areaThumbnails = areaThumbnails;
         this._thumbnailsElements = createImageArray(thumbnails);
-        this._buttonLeft = buttonLeft;
-        this._buttonRight = buttonRight;
+        this._buttonLeft = createButton({
+            icon: iconLeftButton,
+            positionX: "0%",
+            type: "left"
+        });
+        this._buttonRight = createButton({
+            icon: iconRightButton,
+            positionX: "100%",
+            type: "right"
+        });
     }
 
     get backgroundDark() {
@@ -102,6 +137,10 @@ class LightBoxProduct {
     get area() {
         return this._area;
     };
+
+    get areaCurrentImage() {
+        return this._areaCurrentImage;
+    }
 
     get currentElementImage() {
         return this._currentElementImage;
@@ -127,10 +166,12 @@ class LightBoxProduct {
         const {
             backgroundDark,
             area,
+            areaCurrentImage,
             currentElementImage,
             areaThumbnails,
             thumbnailsElements,
-
+            buttonLeft,
+            buttonRight
         } = this;
 
         function mountLightBox({
@@ -142,7 +183,10 @@ class LightBoxProduct {
         }) {
             $("body").append(backgroundDark);
             backgroundDark.append(area);
-            area.append(currentElementImage);
+            area.append(areaCurrentImage);
+            areaCurrentImage.append(currentElementImage);
+            areaCurrentImage.append(buttonLeft);
+            areaCurrentImage.append(buttonRight);
             area.append(areaThumbnails);
             thumbnailsElements.forEach(item => {
                 areaThumbnails.append(item);
