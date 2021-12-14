@@ -51,23 +51,23 @@ let imagesProducts = [
 ];
 
 const imagesInHTML = imagesProducts.map((item, index) => {
-    const { 
-        source, 
-        alt,
-        selected
-    } = item.thumbnail;
+const { 
+    source, 
+    alt,
+    selected
+} = item.thumbnail;
 
-    return (
-        `<img
-            class="image-thumbnail-product"
-            src="${source}"
-            alt="${alt}"
-            data-id="${index}"
-            data-selected="${selected}"
-        />`
-        )
-    });
-    
+return (
+    `<img
+        class="image-thumbnail-product"
+        src="${source}"
+        alt="${alt}"
+        data-id="${index}"
+        data-selected="${selected}"
+    />`
+    )
+})
+
 areaThumbnails.appendTo(areaPresentationProduct);
 
 imagesInHTML.forEach(item => (
@@ -131,7 +131,8 @@ imagesProducts.forEach((item, index) => {
 const lightbox = new LightBoxProduct({
     data: imagesProducts,
     srcImageButtonLeft: "./assets/images/icon-previous.svg",
-    srcImageButtonRight: "./assets/images/icon-next.svg"
+    srcImageButtonRight: "./assets/images/icon-next.svg",
+    srcImageExit: "./assets/images/icon-close.svg"
 });
 
 imageCurrentProduct.click(() => {

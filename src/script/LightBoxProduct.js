@@ -3,7 +3,8 @@ class LightBoxProduct {
     constructor({
         data,
         srcImageButtonLeft,
-        srcImageButtonRight
+        srcImageButtonRight,
+        srcImageExit
     } = {}) {
         function createThumbnailArray(thumbnails) {
             const elementsThumbnailArray = thumbnails.map((item, index) => {
@@ -96,30 +97,43 @@ class LightBoxProduct {
                 "display": "flex",
                 "justify-content": "center",
                 "align-items": "center"
+            },
+            iconExit: {
+                "margin-bottom": 16,
+                "margin-right": 48,
+                "align-self": "end"
             }
         }
 
         const thumbnails = data.map(item => item.thumbnail);
 
-        const backgroundDark = $("<div></div>");
-        const area = $("<div></div>");
-        const areaCurrentImage = $("<div></div>");
-        const currentElementImage = $("<img/>");
-        const areaThumbnails = $("<div/>");
+        const backgroundDark = $("<div class='background-dark'></div>");
+        const area = $("<div class='area'></div>");
+        const areaCurrentImage = $("<div class='area-current-image'></div>");
+        const currentElementImage = $("<img class='current-element-image'/>");
+        const areaThumbnails = $("<div class='area-thumbnails'/>");
         const iconLeftButton = $(`<img
+            class="icon-left-button"
             src="${ srcImageButtonLeft }"
             alt="Image Button"
         />`);
         const iconRightButton = $(`<img
+            class="icon-right-button"
             src="${ srcImageButtonRight }"
             alt="Image Button"
         />`);
+        const iconExit = $(`<img
+            class="icon-exit"
+            src="${srcImageExit}"
+            alt="image exit"
+        />`)
 
         backgroundDark.css(stylesElements.backgroundDark);
         areaThumbnails.css(stylesElements.areaThumbnails);
         area.css(stylesElements.area);
         areaCurrentImage.css(stylesElements.areaCurrentImage);
         currentElementImage.css(stylesElements.currentElementImage);
+        iconExit.css(stylesElements.iconExit);
 
         const { normal } = data[0];
 
@@ -145,6 +159,7 @@ class LightBoxProduct {
 
         this._indexNumber = 1;
         this._data = data;
+        this._iconExit = iconExit;
     }
 
     get backgroundDark() {
@@ -187,6 +202,10 @@ class LightBoxProduct {
         return this._data;
     }
 
+    get iconExit() {
+        return this._iconExit;
+    }
+
     show() {
         let {
             backgroundDark,
@@ -198,7 +217,8 @@ class LightBoxProduct {
             buttonLeft,
             buttonRight,
             indexNumber,
-            data
+            data,
+            iconExit
         } = this;
 
         function mountLightBox({
@@ -210,6 +230,7 @@ class LightBoxProduct {
         }) {
             $("body").append(backgroundDark);
             backgroundDark.append(area);
+            area.append(iconExit);
             area.append(areaCurrentImage);
             areaCurrentImage.append(currentElementImage);
             areaCurrentImage.append(buttonLeft);
