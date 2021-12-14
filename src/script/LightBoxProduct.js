@@ -5,23 +5,37 @@ class LightBoxProduct {
         srcImageButtonLeft,
         srcImageButtonRight
     } = {}) {
-        function createImageArray(thumbnails) {
+        function createThumbnailArray(thumbnails) {
             const elementsThumbnailArray = thumbnails.map((item, index) => {
                 const arrayElementCreated = $("<img/>");
+                const areaElementCreated = $("<div class='area-thumbnail'>");
 
                 arrayElementCreated.css({
+                    "width": "100%",
+                    "border-radius": "inherit",
+                    "transition": "opacity 500ms"
+                });
+                
+                areaElementCreated.css({
                     "width": "15%",
                     "margin-right": 8,
                     "margin-left": 8,
-                    "border-radius": 10
-                })
+                    "border-radius": 10,
+                    "background-color": "#fff",
+                    "display": "flex",
+                    "justify-content": "center",
+                    "align-items": "center"
+                });
 
                 arrayElementCreated.attr("src", item.source);
                 arrayElementCreated.attr("alt", item.alt);
                 arrayElementCreated.attr("data-id", index);
     
-                const [ image ] = arrayElementCreated;
-                return image;
+                areaElementCreated.append(arrayElementCreated);
+                const [ area ] = areaElementCreated;
+                
+                
+                return area;
             });        
             
             return elementsThumbnailArray;
@@ -117,7 +131,7 @@ class LightBoxProduct {
         this._areaCurrentImage = areaCurrentImage;
         this._currentElementImage = currentElementImage;
         this._areaThumbnails = areaThumbnails;
-        this._thumbnailsElements = createImageArray(thumbnails);
+        this._thumbnailsElements = createThumbnailArray(thumbnails);
         this._buttonLeft = createButton({
             icon: iconLeftButton,
             positionX: "0%",
@@ -212,40 +226,103 @@ class LightBoxProduct {
 
             thumbnailsElements.forEach(item => {
                 $(item).on("click", ({ currentTarget }) => {    
-                    const { id } = currentTarget.dataset;
+                    const [ thumbnail ] = currentTarget.children;
+                    const { id } = thumbnail.dataset;
                     const idNumber = Number(id);
 
-                    $(currentTarget).css("filter", "brightness(1.5)");
+                    $(currentTarget).css("border", "2px solid var(--orange)");
+                    $(thumbnail).css("opacity", 0.5);
 
                     image.src = dataImages[idNumber].source;
                     const elementsBrother = $(currentTarget).siblings();
 
-                    elementsBrother.each((index, element) => (
-                        $(element).css("filter", "brightness(1)")
-                    ));
+                    elementsBrother.each((index, element) => {
+                        const [ thumbnail ] = element.children;
+                        
+                        $(element).css("border", "none");
+                        $(thumbnail).css("opacity", 1)
+                    });
 
                     indexNumber = idNumber;
                 });
             });
 
+            function selectedThumbnailsForStyle(indexSelected) {
+                const areaThumbnails = $(".area-thumbnail");
+
+                areaThumbnails.each((index, item) => {
+                    if(indexSelected === index) {
+                        styleThumbnail({
+                            item,
+                            type: "selected"
+                        });
+                    } else {
+                        styleThumbnail({
+                            item,
+                            type: "notSelected"
+                        });
+                    }
+                });
+
+                function styleThumbnail({ 
+                    item, 
+                    type 
+                }) {
+                    const [ image ]= item.children;
+
+                    switch(type) {
+                        case "selected":
+                            $(item).css("border", "2px solid var(--orange)");
+                            $(image).css("opacity", 0.5);
+                            
+                            break;
+                        case "notSelected":
+                            $(item).css("border", "none");
+                            $(image).css("opacity", 1);
+
+                            break;
+                        default:
+                            throw new Error("Invalidate Type");
+                    }
+                    
+                }
+            }
+            
+            function setImage(index) {
+                image.src = dataImages[index].source;
+            }
+
+            selectedThumbnailsForStyle(indexNumber);
+
             buttonLeft.on("click", () => {
                 indexNumber--;
+
+                
                 if(indexNumber < 0) {
                     indexNumber = (dataImages.length - 1);
-                    image.src = dataImages[indexNumber].source;
-                } else {
+                    setImage(indexNumber);
                     
-                    image.src = dataImages[indexNumber].source;
+                    selectedThumbnailsForStyle(indexNumber);
+                } else {
+                    setImage(indexNumber);
+                    
+                    selectedThumbnailsForStyle(indexNumber);
                 }
             });
 
             buttonRight.on("click", () => {
                 indexNumber++;
+
+                
                 if(indexNumber >= dataImages.length) {
                     indexNumber = 0;
-                    image.src = dataImages[indexNumber].source;
+                    setImage(indexNumber);
+
+                    selectedThumbnailsForStyle(indexNumber);
                 } else {
-                    image.src = dataImages[indexNumber].source;
+                    setImage(indexNumber);
+                    
+                    selectedThumbnailsForStyle(indexNumber);
                 }
             });
         }
