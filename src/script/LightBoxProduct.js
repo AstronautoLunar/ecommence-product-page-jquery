@@ -134,7 +134,7 @@ class LightBoxProduct {
         this._areaCurrentImage = areaCurrentImage;
         this._currentElementImage = currentElementImage;
         this._areaThumbnails = areaThumbnails;
-        this._thumbnailsElements = createThumbnailArray(thumbnails);
+        this._divThumbnailsElements = createThumbnailArray(thumbnails);
         this._buttonLeft = createButton({
             icon: iconLeftButton,
             positionX: "0%",
@@ -173,8 +173,8 @@ class LightBoxProduct {
         return this._areaThumbnails;
     }
     
-    get thumbnailsElements() {
-        return this._thumbnailsElements;
+    get divThumbnailsElements() {
+        return this._divThumbnailsElements;
     }
 
     get buttonLeft() {
@@ -216,7 +216,7 @@ class LightBoxProduct {
             areaCurrentImage,
             currentElementImage,
             areaThumbnails,
-            thumbnailsElements,
+            divThumbnailsElements,
             buttonLeft,
             iconLeftButton,
             buttonRight,
@@ -232,7 +232,7 @@ class LightBoxProduct {
             area,
             currentElementImage,
             areaThumbnails,
-            thumbnailsElements
+            divThumbnailsElements
         }) {
             $("body").append(backgroundDark);
             backgroundDark.append(area);
@@ -242,7 +242,7 @@ class LightBoxProduct {
             areaCurrentImage.append(buttonLeft);
             areaCurrentImage.append(buttonRight);
             area.append(areaThumbnails);
-            thumbnailsElements.forEach(item => {
+            divThumbnailsElements.forEach(item => {
                 areaThumbnails.append(item);
             });
 
@@ -251,7 +251,7 @@ class LightBoxProduct {
 
             indexNumber = 0;
 
-            thumbnailsElements.forEach(item => {
+            divThumbnailsElements.forEach(item => {
                 $(item).on("click", ({ currentTarget }) => {    
                     const [ thumbnail ] = currentTarget.children;
                     const { id } = thumbnail.dataset;
@@ -399,7 +399,7 @@ class LightBoxProduct {
             area,
             currentElementImage,
             areaThumbnails,
-            thumbnailsElements
+            divThumbnailsElements
         });
     }
 };

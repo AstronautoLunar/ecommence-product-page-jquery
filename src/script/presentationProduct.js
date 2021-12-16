@@ -84,8 +84,8 @@ function loadImageCurrentProduct(id) {
 }
 
 
-const imagesRendered = $(".image-thumbnail-product");
-imagesRendered.click(({ target }) => {
+const imagesThumbnailProduct = $(".image-thumbnail-product");
+imagesThumbnailProduct.click(({ target }) => {
     const { selected } = target.dataset;
 
     switch(selected) {
@@ -104,7 +104,7 @@ imagesRendered.click(({ target }) => {
         item.dataset.selected = false;
     });
 
-    const arrayThumbnails = [ ...imagesRendered ];
+    const arrayThumbnails = [ ...imagesThumbnailProduct ];
 
     arrayThumbnails.forEach(item => {
         const { 
