@@ -129,9 +129,7 @@ imagesProducts.forEach((item, index) => {
 });
 
 const lightbox = new LightBoxProduct({
-    data: imagesProducts,
-    srcImageButtonLeft: "./assets/images/icon-previous.svg",
-    srcImageButtonRight: "./assets/images/icon-next.svg"
+    data: imagesProducts
 });
 
 imageCurrentProduct.click(() => {

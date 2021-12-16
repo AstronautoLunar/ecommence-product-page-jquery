@@ -1,9 +1,7 @@
 
 class LightBoxProduct {
     constructor({
-        data,
-        srcImageButtonLeft,
-        srcImageButtonRight
+        data
     } = {}) {
         function createThumbnailArray(thumbnails) {
             const elementsThumbnailArray = thumbnails.map((item, index) => {
@@ -33,7 +31,6 @@ class LightBoxProduct {
     
                 areaElementCreated.append(arrayElementCreated);
                 const [ area ] = areaElementCreated;
-                
                 
                 return area;
             });        
@@ -111,16 +108,10 @@ class LightBoxProduct {
         const areaCurrentImage = $("<div class='area-current-image'></div>");
         const currentElementImage = $("<img class='current-element-image'/>");
         const areaThumbnails = $("<div class='area-thumbnails'/>");
-        const iconLeftButton = $(`<img
-            class="icon-left-button"
-            src="${ srcImageButtonLeft }"
-            alt="Image Button"
-        />`);
-        const iconRightButton = $(`<img
-            class="icon-right-button"
-            src="${ srcImageButtonRight }"
-            alt="Image Button"
-        />`);
+        const iconLeftButton = $(`<svg width="12" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M11 1 3 9l8 8" stroke="#1D2026" stroke-width="3" fill="none" fill-rule="evenodd"/></svg>
+        `);
+        const iconRightButton = $(`<svg width="13" height="18" xmlns="http://www.w3.org/2000/svg"><path d="m2 1 8 8-8 8" stroke="#1D2026" stroke-width="3" fill="none" fill-rule="evenodd"/></svg>
+        `);
         const areaButtonIconExit = $("<div class='area-button-icon-exit'></div>");
         const iconExit = $(`<svg width="14" height="15" xmlns="http://www.w3.org/2000/svg"><path d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z" fill="#ffffff" fill-rule="evenodd"/></svg>`);
 
@@ -149,12 +140,13 @@ class LightBoxProduct {
             positionX: "0%",
             type: "left"
         });
+        this._iconLeftButton = iconLeftButton;
         this._buttonRight = createButton({
             icon: iconRightButton,
             positionX: "100%",
             type: "right"
         });
-
+        this._iconRightButton = iconRightButton;
         this._indexNumber = 1;
         this._data = data;
         this._areaButtonIconExit = areaButtonIconExit;
@@ -189,8 +181,16 @@ class LightBoxProduct {
         return this._buttonLeft;
     }
 
+    get iconLeftButton() {
+        return this._iconLeftButton;
+    }
+
     get buttonRight() {
         return this._buttonRight;
+    }
+
+    get iconRightButton() {
+        return this._iconRightButton;
     }
 
     get index() {
@@ -218,7 +218,9 @@ class LightBoxProduct {
             areaThumbnails,
             thumbnailsElements,
             buttonLeft,
+            iconLeftButton,
             buttonRight,
+            iconRightButton,
             indexNumber,
             data,
             areaButtonIconExit,
@@ -317,12 +319,36 @@ class LightBoxProduct {
                 image.src = dataImages[index].source;
             }
 
+            function styleSvg({ 
+                svg, 
+                areaOfSvg 
+            }) {
+                const [ path ] = svg.children()
+
+                areaOfSvg.mouseenter( () => {
+                    $(path).css("stroke", "#ff7d1a")
+                });
+
+                areaOfSvg.mouseleave( () => {
+                    $(path).css("stroke", "#1D2026")
+                });
+            }
+
+            styleSvg({
+                svg: iconLeftButton,
+                areaOfSvg: buttonLeft
+            });
+
+            styleSvg({
+                svg: iconRightButton,
+                areaOfSvg: buttonRight
+            });
+
             selectedThumbnailsForStyle(indexNumber);
 
             buttonLeft.on("click", () => {
                 indexNumber--;
 
-                
                 if(indexNumber < 0) {
                     indexNumber = (dataImages.length - 1);
                     setImage(indexNumber);
@@ -338,7 +364,6 @@ class LightBoxProduct {
             buttonRight.on("click", () => {
                 indexNumber++;
 
-                
                 if(indexNumber >= dataImages.length) {
                     indexNumber = 0;
                     setImage(indexNumber);
