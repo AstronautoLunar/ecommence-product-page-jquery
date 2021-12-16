@@ -131,8 +131,7 @@ imagesProducts.forEach((item, index) => {
 const lightbox = new LightBoxProduct({
     data: imagesProducts,
     srcImageButtonLeft: "./assets/images/icon-previous.svg",
-    srcImageButtonRight: "./assets/images/icon-next.svg",
-    srcImageExit: "./assets/images/icon-close.svg"
+    srcImageButtonRight: "./assets/images/icon-next.svg"
 });
 
 imageCurrentProduct.click(() => {

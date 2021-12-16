@@ -3,8 +3,7 @@ class LightBoxProduct {
     constructor({
         data,
         srcImageButtonLeft,
-        srcImageButtonRight,
-        srcImageExit
+        srcImageButtonRight
     } = {}) {
         function createThumbnailArray(thumbnails) {
             const elementsThumbnailArray = thumbnails.map((item, index) => {
@@ -98,7 +97,7 @@ class LightBoxProduct {
                 "justify-content": "center",
                 "align-items": "center"
             },
-            iconExit: {
+            AreaButtonIconExit: {
                 "margin-bottom": 16,
                 "margin-right": 48,
                 "align-self": "end"
@@ -122,18 +121,17 @@ class LightBoxProduct {
             src="${ srcImageButtonRight }"
             alt="Image Button"
         />`);
-        const iconExit = $(`<img
-            class="icon-exit"
-            src="${srcImageExit}"
-            alt="image exit"
-        />`)
+        const areaButtonIconExit = $("<div class='area-button-icon-exit'></div>");
+        const iconExit = $(`<svg width="14" height="15" xmlns="http://www.w3.org/2000/svg"><path d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z" fill="#ffffff" fill-rule="evenodd"/></svg>`);
+
+        areaButtonIconExit.append(iconExit);
 
         backgroundDark.css(stylesElements.backgroundDark);
         areaThumbnails.css(stylesElements.areaThumbnails);
         area.css(stylesElements.area);
         areaCurrentImage.css(stylesElements.areaCurrentImage);
         currentElementImage.css(stylesElements.currentElementImage);
-        iconExit.css(stylesElements.iconExit);
+        areaButtonIconExit.css(stylesElements.AreaButtonIconExit);
 
         const { normal } = data[0];
 
@@ -159,6 +157,7 @@ class LightBoxProduct {
 
         this._indexNumber = 1;
         this._data = data;
+        this._areaButtonIconExit = areaButtonIconExit;
         this._iconExit = iconExit;
     }
 
@@ -202,6 +201,10 @@ class LightBoxProduct {
         return this._data;
     }
 
+    get areaButtonIconExit() {
+        return this._areaButtonIconExit;
+    }
+
     get iconExit() {
         return this._iconExit;
     }
@@ -218,6 +221,7 @@ class LightBoxProduct {
             buttonRight,
             indexNumber,
             data,
+            areaButtonIconExit,
             iconExit
         } = this;
 
@@ -230,7 +234,7 @@ class LightBoxProduct {
         }) {
             $("body").append(backgroundDark);
             backgroundDark.append(area);
-            area.append(iconExit);
+            area.append(areaButtonIconExit);
             area.append(areaCurrentImage);
             areaCurrentImage.append(currentElementImage);
             areaCurrentImage.append(buttonLeft);
@@ -346,6 +350,23 @@ class LightBoxProduct {
                     selectedThumbnailsForStyle(indexNumber);
                 }
             });
+
+            const [ path ] = iconExit.children();
+            const [ elementPureButtonIcon ] = areaButtonIconExit;
+
+            elementPureButtonIcon.addEventListener('mouseenter', () => {
+                $(path).css("fill", "#ff7d1a");
+            }, true);
+
+            elementPureButtonIcon.addEventListener('mouseleave', () => {
+                $(path).css("fill", "#f7f8fd");
+            }, true);
+
+            $(elementPureButtonIcon).click(() => {
+                $("body > div").remove(".background-dark");
+
+                $(path).css("fill", "#f7f8fd");
+            })
         }
 
         mountLightBox({
