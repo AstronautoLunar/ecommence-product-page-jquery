@@ -67,7 +67,8 @@ class LightBoxProduct {
                 "display": "flex",
                 "flex-direction": "column",
                 "justify-content": "center",
-                "align-items": "center"
+                "align-items": "center",
+                "margin-bottom": 50
             },
             areaCurrentImage: {
                 "position": "relative"
@@ -89,10 +90,10 @@ class LightBoxProduct {
                 "left": 0,
                 "background-color": "rgba(29, 32, 37, 0.5)",
                 "width": "100%",
-                "height": "103vh",
+                "height": "120vh",
                 "display": "flex",
                 "justify-content": "center",
-                "align-items": "center"
+                "align-items": "flex-end"
             },
             AreaButtonIconExit: {
                 "margin-bottom": 16,

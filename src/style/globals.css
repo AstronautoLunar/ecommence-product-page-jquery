@@ -45,3 +45,7 @@
 .attribution a { 
     color: var(--blue); 
 }
+
+li {
+    list-style-type: none;
+}

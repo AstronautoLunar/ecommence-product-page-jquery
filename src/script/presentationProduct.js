@@ -1,6 +1,7 @@
 const areaPresentationProduct = $("#area-presentation-product");
-const areaThumbnails = $('<div id="area-thumbnails-products"></div>');
+const areaThumbnails = $('<ul id="area-thumbnails-products"></ul>');
 const imageCurrentProduct = $('<img id="current-image"/>');
+const areaImageCurrentProduct = $("<div id='area-image-current-product'></div>");
 
 let currentImageProduct = "";
 let imagesProducts = [
@@ -51,20 +52,22 @@ let imagesProducts = [
 ];
 
 const imagesInHTML = imagesProducts.map((item, index) => {
-const { 
-    source, 
-    alt,
-    selected
-} = item.thumbnail;
+    const { 
+        source, 
+        alt,
+        selected
+    } = item.thumbnail;
 
-return (
-    `<img
-        class="image-thumbnail-product"
-        src="${source}"
-        alt="${alt}"
-        data-id="${index}"
-        data-selected="${selected}"
-    />`
+    return (
+        `<li class="item-thumbnail">
+            <img
+                class="image-thumbnail-product"
+                src="${source}"
+                alt="${alt}"
+                data-id="${index}"
+                data-selected="${selected}"
+            />
+        </li>`
     )
 })
 
@@ -80,13 +83,20 @@ function loadImageCurrentProduct(id) {
     imageCurrentProduct.attr("src", currentImageProduct.source);
     imageCurrentProduct.attr("alt", currentImageProduct.alt);
 
-    areaPresentationProduct.prepend(imageCurrentProduct);
+    areaImageCurrentProduct.append(imageCurrentProduct);
+    areaPresentationProduct.prepend(areaImageCurrentProduct);
 }
 
 
-const imagesThumbnailProduct = $(".image-thumbnail-product");
-imagesThumbnailProduct.click(({ target }) => {
+const thumbnailsItems = $(".item-thumbnail");
+
+thumbnailsItems.click(({ 
+    target, 
+    currentTarget 
+}) => {
     const { selected } = target.dataset;
+
+    $(currentTarget).css("border", "2px solid var(--orange)");
 
     switch(selected) {
         case "true":
@@ -98,24 +108,31 @@ imagesThumbnailProduct.click(({ target }) => {
         default:
     }
 
-    const arrayElementsBrothers = [ ...$(target).siblings() ];
+    const parent = $(target).parent();
+
+    const arrayElementsBrothers = [ ...parent.siblings() ];
 
     arrayElementsBrothers.forEach(item => {
-        item.dataset.selected = false;
+        const [ img ] = $(item).children();
+
+        $(item).css("border", "none");
+
+        img.dataset.selected = false;
     });
 
-    const arrayThumbnails = [ ...imagesThumbnailProduct ];
+    const arrayThumbnailsItems = [ ...thumbnailsItems ];
 
-    arrayThumbnails.forEach(item => {
+    arrayThumbnailsItems.forEach(item => {
+        const [ image ] = $(item).children();
+
         const { 
             selected, 
             id 
-        } = item.dataset;
+        } = image.dataset;
 
         if(selected === "true") {
             loadImageCurrentProduct(id);
         }
-
     });
 });
 
