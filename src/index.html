@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>
+      Frontend Mentor | E-commerce product page
+    </title>
+    
+    <link 
+      rel="icon" 
+      type="image/png" 
+      sizes="32x32" 
+      href="./images/favicon-32x32.png"
+    >
+    <link 
+      href="./style/globals.css" 
+      rel="stylesheet"
+    />
+    <link 
+      href="./style/header.css" 
+      rel="stylesheet"
+    />
+    <link 
+      href="./style/main.css" 
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+  </head>
+  <body>
+    <header id="header">
+      <div id="container">
+        <div id="left">
+          <img
+            id="logo"
+            src="./assets/images/logo.svg"
+            alt="image logo"
+          />
+          <nav id="navBar">
+            <ul id="list-items-navBar">
+
+            </ul>
+          </nav>
+        </div>
+
+        <div id="right">
+          <img
+            id="icon-cart"
+            src="assets/images/icon-cart.svg"
+            alt="image cart"
+          />
+
+          <img
+            id="user-image"
+            src="assets/images/image-avatar.png"
+            alt="image user"
+          />
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      
+      <div id="product">
+        <div id="area-presentation-product">
+  
+        </div>
+        <div id="details-products">
+          <div id="container-product">
+            <span id="product-brand">
+              Sneaker Company
+            </span>
+            <h1 id="title-product">
+              Fall Limited Edition Sneakers
+            </h1>
+            <p id="description-product">
+              These low-profile sneakers are your perfect casual wear companion. Featuring a 
+              durable rubber outer sole, they’ll withstand everything the weather can offer.
+            </p>
+            <div id="price-area">
+              <div id="price-details">
+                <span id="price">$125.00</span>
+                <span id="discount">50%</span>
+              </div>
+              <s id="old-price">$250.00</s>
+            </div>
+            <div id="purchase-area">
+              <div id="controls-quantity-product">
+                <button id="minus">
+                  <img
+                    src="assets/images/icon-minus.svg"
+                    alt="icon minus"
+                  />
+                </button>
+                <span>0</span>
+                <button id="plus">
+                  <img
+                    src="assets/images/icon-plus.svg"
+                    alt="icon plus"
+                  />
+                </button>
+              </div>
+              <button id="purchase-button">
+                <i class="fas fa-cart-plus"></i>
+                Add to cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+      Coded by <a href="https://github.com/Pyedrown">Pyedrown</a>.
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./script/data.js"></script>
+    <script src="./script/navBar.js"></script>
+    <script src="./script/LightBoxProduct.js"></script>
+    <script src="./script/presentationProduct.js"></script>
+  </body>
+</html>
